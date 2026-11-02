@@ -141,16 +141,13 @@
     setStatus('You have voted on every verse. Thank you!', 'ok');
   };
 
-  // Verses are in Bible order, so everything before Matthew 1:1 is Old Testament.
-  const ntStart = verses.findIndex((v) => v.ref.startsWith('Matthew '));
   function randomIn(lo, hi) {
     const all = []; for (let j = lo; j < hi; j++) if (j !== idx) all.push(j);
     const open = all.filter((j) => !votes[verses[j].id]);
     const pool = open.length ? open : all;
     if (pool.length) show(pool[Math.floor(Math.random() * pool.length)]);
   }
-  $('randOT').onclick = () => randomIn(0, ntStart);
-  $('randNT').onclick = () => randomIn(ntStart, verses.length);
+  $('rand').onclick = () => randomIn(0, verses.length);
 
   // ---------- start ----------
   if (!(await initAuth())) return;
