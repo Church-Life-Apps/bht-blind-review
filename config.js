@@ -2,5 +2,5 @@
 window.BHT_CONFIG = {
   supabaseUrl: "https://egfienvlfwkwbpaazaea.supabase.co",
   supabaseAnonKey: "sb_publishable_x5yCYw2w0qsS3ZoBS6mJkw_rpHhaVf5",
-  googleSignIn: false   // set true once Google is enabled under Authentication > Providers
+  googleSignIn: true   // set true once Google is enabled under Authentication > Providers
 };
