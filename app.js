@@ -45,9 +45,23 @@
       return true;
     }
     $('signin').classList.remove('hidden');
-    if (cfg.googleSignIn) {
+    if (cfg.googleSignIn && cfg.googleClientId) {
+      // Google's own sign-in button runs on this site, so Google's prompt names this site instead of the database address.
+      const raw = btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(32))));
+      const hashBuf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+      const hashed = Array.from(new Uint8Array(hashBuf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+      await new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+      google.accounts.id.initialize({
+        client_id: cfg.googleClientId,
+        nonce: hashed,
+        use_fedcm_for_prompt: true,
+        callback: async (resp) => {
+          const { error } = await sb.auth.signInWithIdToken({ provider: 'google', token: resp.credential, nonce: raw });
+          if (error) { $('signinStatus').textContent = 'Could not sign in with Google: ' + error.message; $('signinStatus').className = 'status err'; }
+        },
+      });
       $('google').classList.remove('hidden');
-      $('google').onclick = () => sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.href.split('#')[0] } });
+      google.accounts.id.renderButton($('google'), { theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill' });
     }
     $('sendLink').onclick = async () => {
       const email = $('email').value.trim();
