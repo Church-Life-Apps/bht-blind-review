@@ -44,8 +44,8 @@
       if (!!user !== was) location.reload();
     });
     if (user) {
-      $('who').textContent = '· ' + (user.email || 'signed in');
-      $('signout').classList.remove('hidden');
+      $('who').textContent = 'Signed in as ' + (user.email || 'reviewer');
+      $('account').classList.remove('hidden');
       $('signout').onclick = async (e) => {
         e.preventDefault();
         try { await sb.auth.signOut({ scope: 'local' }); } catch (_) {}

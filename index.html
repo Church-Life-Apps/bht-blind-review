@@ -9,6 +9,10 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header id="account" class="account hidden">
+  <span id="who"></span>
+  <button id="signout">Sign out</button>
+</header>
 <main>
   <h1>Which help text is better?</h1>
   <p class="sub">Pick a verse, read both help texts and choose the one that explains it better. You can add a short reason if you like. You can change your vote at any time.</p>
@@ -33,8 +37,7 @@
       <button id="next">Next &rarr;</button>
       <button id="nextOpen">Next unvoted</button>
       <span class="progress"><span id="done">0</span> of <span id="total">0</span> voted
-        <span class="who" id="who"></span></span>
-      <button id="signout" class="hidden">Sign out</button>
+        </span>
     </div>
 
     <div class="ref" id="ref"></div>
