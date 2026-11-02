@@ -32,6 +32,11 @@
   // ---------- auth ----------
   async function initAuth() {
     if (DEMO) { $('demo').classList.remove('hidden'); return true; }
+    if (new URLSearchParams(location.search).has('signout')) {
+      try { await sb.auth.signOut({ scope: 'local' }); } catch (_) {}
+      Object.keys(localStorage).filter((k) => k.startsWith('sb-')).forEach((k) => localStorage.removeItem(k));
+      history.replaceState(null, '', location.pathname);
+    }
     const { data } = await sb.auth.getSession();
     user = data.session && data.session.user;
     sb.auth.onAuthStateChange((_e, s) => {
@@ -41,7 +46,13 @@
     if (user) {
       $('who').textContent = '· ' + (user.email || 'signed in');
       $('signout').classList.remove('hidden');
-      $('signout').onclick = async (e) => { e.preventDefault(); await sb.auth.signOut(); };
+      $('signout').onclick = async (e) => {
+        e.preventDefault();
+        try { await sb.auth.signOut({ scope: 'local' }); } catch (_) {}
+        Object.keys(localStorage).filter((k) => k.startsWith('sb-')).forEach((k) => localStorage.removeItem(k));
+        if (window.google && google.accounts) google.accounts.id.disableAutoSelect();
+        location.href = location.pathname;
+      };
       return true;
     }
     $('signin').classList.remove('hidden');
