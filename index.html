@@ -9,11 +9,11 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header id="account" class="account hidden">
-  <a href="about.html" class="who">About this project</a>
-  <span id="who"></span>
-  <button id="signout">Sign out</button>
-</header>
+<header class="site"><div class="in">
+  <a class="brand" href="./">BibleGo <span class="long">help text </span>review</a>
+  <nav><a href="about.html">About</a><a href="privacy.html">Privacy</a>
+    <span id="account" class="acct hidden"><span id="who"></span><button id="signout">Sign out</button></span></nav>
+</div></header>
 <main>
   <h1>Which help text is better?</h1>
   <p class="sub">Pick a verse, read both help texts and choose the one that explains it better. You can add a short reason if you like. You can change your vote at any time.</p>
@@ -25,8 +25,8 @@
     <div id="google" class="hidden" style="margin:0 0 16px"></div>
     <div id="emailBox">
       <label for="email">Or get a sign-in link by email</label>
-      <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
-      <button id="sendLink">Send link</button>
+      <div class="row1"><input id="email" type="email" placeholder="you@example.com" autocomplete="email">
+      <button id="sendLink">Send link</button></div>
     </div>
     <p id="signinStatus" class="status"></p>
   </section>
@@ -38,8 +38,7 @@
       <button id="next">Next &rarr;</button>
       <button id="nextOpen">Next unvoted</button>
       <button id="rand">Random verse</button>
-      <span class="progress"><span id="done">0</span> of <span id="total">0</span> voted
-        </span>
+      <span class="progress"><span id="done">0</span> of <span id="total">0</span> voted</span>
     </div>
 
     <div class="ref" id="ref"></div>
@@ -59,7 +58,6 @@
       </div>
     </div>
   </section>
-  <p class="sub"><a href="about.html">About this project</a> · <a href="privacy.html">Privacy</a></p>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
